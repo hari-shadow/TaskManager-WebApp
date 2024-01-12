@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Manager</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Welcome, {{ user.username }}!</h1>
+
+    <form id="addTaskForm">
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title" required>
+
+        <label for="description">Description:</label>
+        <textarea id="description" name="description"></textarea>
+
+        <label for="due_date">Due Date:</label>
+        <input type="date" id="due_date" name="due_date" required>
+
+        <button type="submit">Add Task</button>
+    </form>
+
+    <ul id="taskList">
+        {% for task in tasks %}
+            <li>
+                <span class="taskTitle">{{ task.title }}</span>
+                <span class="taskDueDate">{{ task.due_date.strftime('%Y-%m-%d') }}</span>
+                {% if task.completed %}
+                    <span class="taskStatus">Completed</span>
+                {% else %}
+                    <span class="taskStatus">Pending</span>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+
+    <a href="{{ url_for('logout') }}">Logout</a>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
+
